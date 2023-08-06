@@ -34,11 +34,11 @@ export default function Header() {
             </Text>
           </Stack>
           {session.data?.user ? (
-            <Text className="font-bold" onClick={() => signOut()}>
+            <Text className="font-bold" onClick={async () => await signOut()}>
               Sign out
             </Text>
           ) : (
-            <Text className="font-bold" onClick={() => signIn()}>
+            <Text className="font-bold" onClick={async () => await signIn()}>
               Sign in
             </Text>
           )}

@@ -11,7 +11,7 @@ export const expenseRouter = createTRPCRouter({
         await prisma.expenses.create({
           data: { ...input },
         });
-      } catch (e: any) {
+      } catch (e) {
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
           message: "INTERNAL_SERVER_ERROR",
