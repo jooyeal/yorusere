@@ -73,6 +73,7 @@ model Expenses {
     type ExpenseType
     content String?
     person PersonType
+    author PersonType
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }
@@ -91,8 +92,10 @@ enum ExpenseType {
 // Serena -> S
 // Yoru -> Y
 // Together -> T
+// unknown -> Q
 enum PersonType {
     S
     Y
     T
+    Q
 }
