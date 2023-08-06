@@ -6,9 +6,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 
-type Props = {};
-
-export default function Header({}: Props) {
+export default function Header() {
   const [opened, { open, close }] = useDisclosure(false);
   const session = useSession();
   const router = useRouter();
