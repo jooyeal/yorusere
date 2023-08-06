@@ -23,9 +23,11 @@ const config = {
         fixStyle: "inline-type-imports",
       },
     ],
-    "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
+    // "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
     "@typescript-eslint/no-floating-promises": "off",
     "@typescript-eslint/no-misused-promises": "off",
+    "@typescript-eslint/no-unused-vars": "off",
+    "@typescript-eslint/non-nullable-type-assertion-style": "off",
   },
 };
 
