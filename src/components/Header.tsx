@@ -4,7 +4,6 @@ import React from "react";
 import BaseModal from "./BaseModal";
 import { useDisclosure } from "@mantine/hooks";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { useRouter } from "next/router";
 import Link from "next/link";
 
 export default function Header() {

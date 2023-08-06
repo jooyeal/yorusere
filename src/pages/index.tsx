@@ -1,8 +1,5 @@
 import { Box, Container } from "@mantine/core";
-import { signIn, signOut, useSession } from "next-auth/react";
 import Head from "next/head";
-import Header from "~/components/Header";
-import { api } from "~/utils/api";
 
 export default function Home() {
   return (
