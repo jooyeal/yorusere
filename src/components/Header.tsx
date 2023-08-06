@@ -11,9 +11,9 @@ export default function Header() {
   const session = useSession();
   const router = useRouter();
 
-  const onClickLink = (href: string) => {
+  const onClickLink = async (href: string) => {
     close();
-    router.push(href);
+    await router.push(href);
   };
   return (
     <Flex className="h-16 p-4" align="center">
