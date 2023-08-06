@@ -64,3 +64,35 @@ model VerificationToken {
 
     @@unique([identifier, token])
 }
+
+model Expenses {
+    id String @id @default(cuid())
+    title String
+    amount Int
+    dateTime DateTime
+    type ExpenseType
+    content String?
+    person PersonType
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+// Food -> F
+// Liquor -> L
+// Restaurant -> R
+// Other -> O
+enum ExpenseType {
+    F
+    L
+    R
+    O
+}
+
+// Serena -> S
+// Yoru -> Y
+// Together -> T
+enum PersonType {
+    S
+    Y
+    T
+}

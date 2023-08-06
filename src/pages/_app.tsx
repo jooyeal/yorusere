@@ -5,6 +5,7 @@ import { api } from "~/utils/api";
 import "~/styles/globals.css";
 import { MantineProvider } from "@mantine/core";
 import Layout from "~/components/Layout";
+import { Notifications } from "@mantine/notifications";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -20,6 +21,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
           colorScheme: "light",
         }}
       >
+        <Notifications />
         <Layout>
           <Component {...pageProps} />
         </Layout>
