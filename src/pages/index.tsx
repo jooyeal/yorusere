@@ -8,19 +8,47 @@ import {
   Divider,
 } from "@mantine/core";
 import { MonthPickerInput } from "@mantine/dates";
+import { notifications } from "@mantine/notifications";
 import { PersonType } from "@prisma/client";
 import { IconAnalyze, IconTable } from "@tabler/icons-react";
 import Head from "next/head";
 import { useState } from "react";
 import AnalysisList from "~/components/AnalysisList";
+import MainPanel from "~/components/MainPanel";
 import { api } from "~/utils/api";
 
 export default function Home() {
   const [date, setDate] = useState<Date>(new Date());
   const [person, setPerson] = useState<PersonType>("T");
+  const [author, setAuthor] = useState<PersonType>("T");
   const [tab, setTab] = useState<string | null>("panel");
-  const { data } = api.expense.getByMonth.useQuery({ date, person });
+  const { data, refetch } = api.expense.getByMonth.useQuery({
+    date,
+    person,
+    author,
+  });
+  const { mutate } = api.expense.delete.useMutation();
 
+  const onClickDelete = (id: string) => {
+    mutate(
+      { id },
+      {
+        onSuccess: () => {
+          notifications.show({ message: "deleted!" });
+          refetch();
+        },
+        onError: (e) => {
+          notifications.show({
+            message:
+              e.data?.code === "BAD_REQUEST"
+                ? "Please check required fields"
+                : e.message,
+            color: "red",
+          });
+        },
+      }
+    );
+  };
   return (
     <>
       <Head>
@@ -48,12 +76,23 @@ export default function Home() {
               ]}
               onChange={(e) => setPerson((e as PersonType) ?? "T")}
             />
+            <Select
+              label="Author"
+              defaultValue="T"
+              value={author}
+              data={[
+                { label: "Together", value: "T" },
+                { label: "Serena", value: "S" },
+                { label: "Yoru", value: "Y" },
+              ]}
+              onChange={(e) => setAuthor((e as PersonType) ?? "T")}
+            />
             <Divider mt="sm" />
           </Stack>
           <Tabs defaultValue="panel" value={tab} onTabChange={setTab}>
             <Tabs.List
               bg="white"
-              sx={{ position: "sticky", top: 277, zIndex: 10 }}
+              sx={{ position: "sticky", top: 354, zIndex: 10 }}
             >
               <Tabs.Tab value="panel" icon={<IconAnalyze size="0.8rem" />}>
                 Panel
@@ -64,11 +103,18 @@ export default function Home() {
             </Tabs.List>
 
             <Tabs.Panel value="panel" pt="xs">
-              not yet
+              <MainPanel
+                usingFor={person}
+                author={author}
+                totalExpense={data?.totalExpense}
+              />
             </Tabs.Panel>
 
             <Tabs.Panel value="list" pt="xs">
-              <AnalysisList data={data} />
+              <AnalysisList
+                data={data?.expensesData}
+                onClickDelete={onClickDelete}
+              />
             </Tabs.Panel>
           </Tabs>
         </Container>

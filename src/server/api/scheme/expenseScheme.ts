@@ -9,10 +9,16 @@ export const createExpenseInput = z.object({
   person: z.enum(["S", "Y", "T"]),
 });
 
+export const deleteExpenseInput = z.object({
+  id: z.string(),
+});
+
 export const getByMonthInput = z.object({
   date: z.date(),
   person: z.enum(["S", "Y", "T"]),
+  author: z.enum(["S", "Y", "T"]),
 });
 
 export type TcreateExpenseInput = z.infer<typeof createExpenseInput>;
+export type TdeleteExpenseInput = z.infer<typeof deleteExpenseInput>;
 export type TgetByMonth = z.infer<typeof getByMonthInput>;

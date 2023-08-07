@@ -1,5 +1,9 @@
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
-import { createExpenseInput, getByMonthInput } from "../scheme/expenseScheme";
+import {
+  createExpenseInput,
+  deleteExpenseInput,
+  getByMonthInput,
+} from "../scheme/expenseScheme";
 import { TRPCError } from "@trpc/server";
 import { env } from "~/env.mjs";
 
@@ -18,6 +22,22 @@ export const expenseRouter = createTRPCRouter({
                 ? "S"
                 : "Y",
             dateTime: new Date(input.dateTime).toISOString(),
+          },
+        });
+      } catch (e) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "INTERNAL_SERVER_ERROR",
+        });
+      }
+    }),
+  delete: protectedProcedure
+    .input(deleteExpenseInput)
+    .mutation(async ({ input, ctx }) => {
+      try {
+        await ctx.prisma.expenses.delete({
+          where: {
+            id: input.id,
           },
         });
       } catch (e) {
@@ -46,7 +66,20 @@ export const expenseRouter = createTRPCRouter({
             person: input.person,
           },
         });
-        return expenses;
+
+        const expensesData =
+          input.author === "T"
+            ? expenses
+            : input.author === "Y"
+            ? expenses.filter((expense) => expense.author === "Y")
+            : expenses.filter((expense) => expense.author === "S");
+
+        const totalExpense = expensesData.reduce(
+          (prev, curr) => prev + curr.amount,
+          0
+        );
+
+        return { expensesData, totalExpense };
       } catch (e) {
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",

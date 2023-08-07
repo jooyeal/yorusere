@@ -5,9 +5,16 @@ import { convertExpenseType, convertPersonType } from "~/utils/common";
 
 type Props = {
   data: Expenses[] | undefined;
+  onClickDelete: (id: string) => void;
 };
 
-const Row = ({ rowModel }: { rowModel: Expenses }) => {
+const Row = ({
+  rowModel,
+  onClickDelete,
+}: {
+  rowModel: Expenses;
+  onClickDelete: (id: string) => void;
+}) => {
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder>
       <Grid>
@@ -23,7 +30,7 @@ const Row = ({ rowModel }: { rowModel: Expenses }) => {
         </Grid.Col>
         <Grid.Col span={4}>Amount</Grid.Col>
         <Grid.Col span={8}>
-          {new Intl.NumberFormat("ja-JP", {
+          {Intl.NumberFormat("ja-JP", {
             style: "currency",
             currency: "JPY",
           }).format(rowModel.amount)}
@@ -36,7 +43,11 @@ const Row = ({ rowModel }: { rowModel: Expenses }) => {
         <Grid.Col span={8}>{convertPersonType(rowModel.author)}</Grid.Col>
       </Grid>
       <Flex justify="flex-end">
-        <Button variant="outline" color="red">
+        <Button
+          variant="outline"
+          color="red"
+          onClick={() => onClickDelete(rowModel.id)}
+        >
           Delete
         </Button>
       </Flex>
@@ -44,11 +55,11 @@ const Row = ({ rowModel }: { rowModel: Expenses }) => {
   );
 };
 
-export default function AnalysisList({ data }: Props) {
+export default function AnalysisList({ data, onClickDelete }: Props) {
   return (
     <Stack p="sm">
       {data?.map((row) => (
-        <Row key={row.id} rowModel={row} />
+        <Row key={row.id} rowModel={row} onClickDelete={onClickDelete} />
       ))}
     </Stack>
   );
