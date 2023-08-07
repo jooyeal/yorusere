@@ -6,6 +6,7 @@ import {
 } from "../scheme/expenseScheme";
 import { TRPCError } from "@trpc/server";
 import { env } from "~/env.mjs";
+import { utcToZonedTime } from "date-fns-tz";
 
 export const expenseRouter = createTRPCRouter({
   create: protectedProcedure
@@ -21,7 +22,7 @@ export const expenseRouter = createTRPCRouter({
                 : ctx.session.user.email === env.SERE_EMAIL
                 ? "S"
                 : "Y",
-            dateTime: new Date(input.dateTime).toISOString(),
+            dateTime: utcToZonedTime(new Date(input.dateTime), "Asia/Tokyo"),
           },
         });
       } catch (e) {
@@ -60,8 +61,8 @@ export const expenseRouter = createTRPCRouter({
         const expenses = await ctx.prisma.expenses.findMany({
           where: {
             dateTime: {
-              lt: new Date(endDate).toISOString(),
-              gte: new Date(startDate).toISOString(),
+              lt: utcToZonedTime(new Date(endDate), "Asia/Tokyo"),
+              gte: utcToZonedTime(new Date(startDate), "Asia/Tokyo"),
             },
             person: input.person,
           },
