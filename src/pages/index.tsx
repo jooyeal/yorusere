@@ -53,7 +53,7 @@ export default function Home() {
           <Tabs defaultValue="panel" value={tab} onTabChange={setTab}>
             <Tabs.List
               bg="white"
-              sx={{ position: "sticky", top: 277, zIndex: 99 }}
+              sx={{ position: "sticky", top: 277, zIndex: 10 }}
             >
               <Tabs.Tab value="panel" icon={<IconAnalyze size="0.8rem" />}>
                 Panel
