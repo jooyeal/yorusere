@@ -65,9 +65,11 @@ export default function Home() {
             <MonthPickerInput
               label="Month"
               value={date}
-              onChange={(e) =>
-                setDate(utcToZonedTime(new Date(e as Date), "Asia/Tokyo"))
-              }
+              onChange={(e) => {
+                console.log(e);
+                console.log(utcToZonedTime(new Date(e as Date), "Asia/Tokyo"));
+                setDate(utcToZonedTime(new Date(e as Date), "Asia/Tokyo"));
+              }}
             />
             <Select
               label="Using for"
