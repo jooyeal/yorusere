@@ -6,6 +6,7 @@ import {
   Tabs,
   Select,
   Divider,
+  Button,
 } from "@mantine/core";
 import { MonthPickerInput } from "@mantine/dates";
 import { notifications } from "@mantine/notifications";
@@ -87,12 +88,15 @@ export default function Home() {
               ]}
               onChange={(e) => setAuthor((e as PersonType) ?? "T")}
             />
+            <Button variant="outline" onClick={() => refetch()}>
+              Search
+            </Button>
             <Divider mt="sm" />
           </Stack>
           <Tabs defaultValue="panel" value={tab} onTabChange={setTab}>
             <Tabs.List
               bg="white"
-              sx={{ position: "sticky", top: 354, zIndex: 10 }}
+              sx={{ position: "sticky", top: 406, zIndex: 10 }}
             >
               <Tabs.Tab value="panel" icon={<IconAnalyze size="0.8rem" />}>
                 Panel
