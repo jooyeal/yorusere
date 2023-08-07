@@ -61,8 +61,8 @@ export const expenseRouter = createTRPCRouter({
         const expenses = await ctx.prisma.expenses.findMany({
           where: {
             dateTime: {
-              lt: utcToZonedTime(new Date(endDate), "Asia/Tokyo"),
-              gte: utcToZonedTime(new Date(startDate), "Asia/Tokyo"),
+              lt: new Date(endDate).toISOString(),
+              gte: new Date(startDate).toISOString(),
             },
             person: input.person,
           },
