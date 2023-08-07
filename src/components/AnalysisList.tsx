@@ -1,6 +1,8 @@
 import { Button, Card, Flex, Grid, Stack } from "@mantine/core";
 import { Expenses } from "@prisma/client";
+import { useSession } from "next-auth/react";
 import React from "react";
+import { env } from "~/env.mjs";
 import { api } from "~/utils/api";
 import { convertExpenseType, convertPersonType } from "~/utils/common";
 
@@ -16,6 +18,7 @@ const Row = ({
   rowModel: Expenses;
   onClickDelete: (id: string) => void;
 }) => {
+  const session = useSession();
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder>
       <Grid>
@@ -48,6 +51,11 @@ const Row = ({
           variant="outline"
           color="red"
           onClick={() => onClickDelete(rowModel.id)}
+          disabled={
+            rowModel.author === "Y"
+              ? "jyol1234@gmail.com" !== session.data?.user.email
+              : "seresere707070@gmail.com" !== session.data?.user.email
+          }
         >
           Delete
         </Button>

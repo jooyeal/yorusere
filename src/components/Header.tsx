@@ -1,4 +1,4 @@
-import { ActionIcon, Flex, Stack, Text } from "@mantine/core";
+import { ActionIcon, Divider, Flex, Stack, Text } from "@mantine/core";
 import { IconMenu2 } from "@tabler/icons-react";
 import React from "react";
 import BaseModal from "./BaseModal";
@@ -28,8 +28,15 @@ export default function Header() {
         <Stack justify="space-between" h="calc(100vh - 80px)">
           <Stack>
             <Text className="font-semibold" onClick={() => onClickLink("/")}>
-              Home
+              Expenses
             </Text>
+            <Text
+              className="font-semibold"
+              onClick={() => onClickLink("/shopping")}
+            >
+              Shopping list
+            </Text>
+            <Divider />
             <Text
               className="font-semibold"
               onClick={() => onClickLink("/expense/add")}

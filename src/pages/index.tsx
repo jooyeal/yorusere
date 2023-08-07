@@ -12,7 +12,6 @@ import { MonthPickerInput } from "@mantine/dates";
 import { notifications } from "@mantine/notifications";
 import { PersonType } from "@prisma/client";
 import { IconAnalyze, IconTable } from "@tabler/icons-react";
-import { utcToZonedTime } from "date-fns-tz";
 import Head from "next/head";
 import { useState } from "react";
 import AnalysisList from "~/components/AnalysisList";
@@ -73,7 +72,7 @@ export default function Home() {
               </Tabs.Tab>
             </Tabs.List>
 
-            <Stack bg="white">
+            <Stack bg="white" p="md">
               <Title order={3}>Total Analysis</Title>
               <MonthPickerInput
                 label="Month"
