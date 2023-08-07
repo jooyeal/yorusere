@@ -53,7 +53,10 @@ export const expenseRouter = createTRPCRouter({
       try {
         const targetDate = input.date;
         const targetYear = new Date(targetDate).getFullYear();
-        const targetMonth = new Date(targetDate).getMonth() + 1;
+        const targetMonth =
+          env.NODE_ENV === "development"
+            ? new Date(targetDate).getMonth() + 1
+            : new Date(targetDate).getMonth();
         const startDate = new Date(`${targetYear}-${targetMonth}-1`);
         const endDate = new Date(`${targetYear}-${targetMonth + 1}-1`);
 
