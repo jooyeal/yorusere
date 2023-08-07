@@ -14,7 +14,6 @@ export const expenseRouter = createTRPCRouter({
       try {
         const dateTime = input.dateTime;
         dateTime.setTime(dateTime.getTime() + 9 * 60 * 60 * 1000);
-
         await ctx.prisma.expenses.create({
           data: {
             ...input,
@@ -24,7 +23,7 @@ export const expenseRouter = createTRPCRouter({
                 : ctx.session.user.email === env.SERE_EMAIL
                 ? "S"
                 : "Y",
-            dateTime,
+            dateTime: dateTime.toISOString(),
           },
         });
       } catch (e) {
