@@ -7,7 +7,7 @@ import {
   Textarea,
   Title,
 } from "@mantine/core";
-import { DateTimePicker } from "@mantine/dates";
+import { DatePickerInput, DateTimePicker } from "@mantine/dates";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { TcreateExpenseInput } from "~/server/api/scheme/expenseScheme";
@@ -55,7 +55,7 @@ export default function ExpenseAdd() {
             label="Amount"
             required
           />
-          <DateTimePicker
+          <DatePickerInput
             {...register("dateTime")}
             label="Pick date and time"
             onChange={(e) => setValue("dateTime", e as Date)}
