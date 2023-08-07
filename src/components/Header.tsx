@@ -34,7 +34,7 @@ export default function Header() {
               className="font-semibold"
               onClick={() => onClickLink("/shopping")}
             >
-              Shopping list
+              Wishlist
             </Text>
             <Divider />
             <Text

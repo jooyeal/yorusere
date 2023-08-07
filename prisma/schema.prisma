@@ -14,12 +14,6 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model Example {
-    id        String   @id @default(cuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-}
-
 // Necessary for Next auth
 model Account {
     id                String  @id @default(cuid())
@@ -74,6 +68,14 @@ model Expenses {
     content String?
     person PersonType
     author PersonType
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model WishList {
+    id String @id @default(cuid())
+    title String
+    isChecked Boolean @default(false)
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }
