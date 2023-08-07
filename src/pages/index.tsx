@@ -51,7 +51,10 @@ export default function Home() {
             <Divider mt="sm" />
           </Stack>
           <Tabs defaultValue="panel" value={tab} onTabChange={setTab}>
-            <Tabs.List>
+            <Tabs.List
+              bg="white"
+              sx={{ position: "sticky", top: 277, zIndex: 99 }}
+            >
               <Tabs.Tab value="panel" icon={<IconAnalyze size="0.8rem" />}>
                 Panel
               </Tabs.Tab>
@@ -61,7 +64,7 @@ export default function Home() {
             </Tabs.List>
 
             <Tabs.Panel value="panel" pt="xs">
-              Gallery tab content
+              not yet
             </Tabs.Panel>
 
             <Tabs.Panel value="list" pt="xs">

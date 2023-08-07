@@ -46,7 +46,7 @@ const Row = ({ rowModel }: { rowModel: Expenses }) => {
 
 export default function AnalysisList({ data }: Props) {
   return (
-    <Stack>
+    <Stack p="sm">
       {data?.map((row) => (
         <Row key={row.id} rowModel={row} />
       ))}
