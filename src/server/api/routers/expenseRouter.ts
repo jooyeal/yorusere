@@ -65,7 +65,7 @@ export const expenseRouter = createTRPCRouter({
               lt: new Date(endDate).toISOString(),
               gte: new Date(startDate).toISOString(),
             },
-            person: input.person,
+            person: input.person === "A" ? {} : input.person,
           },
         });
 

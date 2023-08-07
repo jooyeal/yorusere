@@ -85,14 +85,15 @@ export default function Home() {
               />
               <Select
                 label="Using for"
-                defaultValue="T"
+                defaultValue="A"
                 value={person}
                 data={[
+                  { label: "Total", value: "A" },
                   { label: "Together", value: "T" },
                   { label: "Serena", value: "S" },
                   { label: "Yoru", value: "Y" },
                 ]}
-                onChange={(e) => setPerson((e as PersonType) ?? "T")}
+                onChange={(e) => setPerson((e as PersonType) ?? "A")}
               />
               <Select
                 label="Author"

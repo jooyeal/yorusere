@@ -98,4 +98,5 @@ enum PersonType {
     S
     Y
     T
+    A
 }

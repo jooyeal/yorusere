@@ -15,8 +15,8 @@ export const deleteExpenseInput = z.object({
 
 export const getByMonthInput = z.object({
   date: z.date(),
-  person: z.enum(["S", "Y", "T"]),
-  author: z.enum(["S", "Y", "T"]),
+  person: z.enum(["S", "Y", "T", "A"]),
+  author: z.enum(["S", "Y", "T", "A"]),
 });
 
 export type TcreateExpenseInput = z.infer<typeof createExpenseInput>;
