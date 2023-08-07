@@ -12,6 +12,7 @@ import { MonthPickerInput } from "@mantine/dates";
 import { notifications } from "@mantine/notifications";
 import { PersonType } from "@prisma/client";
 import { IconAnalyze, IconTable } from "@tabler/icons-react";
+import { utcToZonedTime } from "date-fns-tz";
 import Head from "next/head";
 import { useState } from "react";
 import AnalysisList from "~/components/AnalysisList";
@@ -64,7 +65,9 @@ export default function Home() {
             <MonthPickerInput
               label="Month"
               value={date}
-              onChange={(e) => setDate(new Date(e as Date))}
+              onChange={(e) =>
+                setDate(utcToZonedTime(new Date(e as Date), "Asia/Tokyo"))
+              }
             />
             <Select
               label="Using for"
