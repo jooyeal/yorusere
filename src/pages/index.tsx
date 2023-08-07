@@ -66,9 +66,9 @@ export default function Home() {
               label="Month"
               value={date}
               onChange={(e) => {
-                console.log(e);
-                console.log(utcToZonedTime(new Date(e as Date), "Asia/Tokyo"));
-                setDate(utcToZonedTime(new Date(e as Date), "Asia/Tokyo"));
+                const date = new Date(e as Date);
+                date.setDate(date.getDate() + 1);
+                setDate(date);
               }}
             />
             <Select
