@@ -21,5 +21,7 @@ export const convertPersonType = (type: PersonType) => {
       return "Together";
     case "Y":
       return "Yoru";
+    case "A":
+      return "Total";
   }
 };
