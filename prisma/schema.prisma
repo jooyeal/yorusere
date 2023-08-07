@@ -92,10 +92,8 @@ enum ExpenseType {
 // Serena -> S
 // Yoru -> Y
 // Together -> T
-// unknown -> Q
 enum PersonType {
     S
     Y
     T
-    Q
 }

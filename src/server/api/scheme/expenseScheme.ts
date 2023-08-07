@@ -7,7 +7,12 @@ export const createExpenseInput = z.object({
   type: z.enum(["F", "L", "R", "O"]),
   content: z.string().optional().nullable(),
   person: z.enum(["S", "Y", "T"]),
-  author: z.enum(["S", "Y"]),
+});
+
+export const getByMonthInput = z.object({
+  date: z.date(),
+  person: z.enum(["S", "Y", "T"]),
 });
 
 export type TcreateExpenseInput = z.infer<typeof createExpenseInput>;
+export type TgetByMonth = z.infer<typeof getByMonthInput>;

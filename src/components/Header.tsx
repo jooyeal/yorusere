@@ -15,7 +15,12 @@ export default function Header() {
     router.push(href).then(() => close());
   };
   return (
-    <Flex className="h-16 p-4" align="center">
+    <Flex
+      className="h-16 p-4"
+      align="center"
+      bg="white"
+      sx={{ position: "sticky", top: 0, zIndex: 100 }}
+    >
       <ActionIcon variant="outline" onClick={open}>
         <IconMenu2 />
       </ActionIcon>
