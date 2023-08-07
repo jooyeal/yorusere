@@ -60,48 +60,10 @@ export default function Home() {
       </Head>
       <Box>
         <Container>
-          <Stack bg="white" sx={{ position: "sticky", top: 64, zIndex: 99 }}>
-            <Title order={3}>Total Analysis</Title>
-            <MonthPickerInput
-              label="Month"
-              value={date}
-              onChange={(e) => {
-                const date = new Date(e as Date);
-                date.setDate(date.getDate() + 1);
-                setDate(date);
-              }}
-            />
-            <Select
-              label="Using for"
-              defaultValue="T"
-              value={person}
-              data={[
-                { label: "Together", value: "T" },
-                { label: "Serena", value: "S" },
-                { label: "Yoru", value: "Y" },
-              ]}
-              onChange={(e) => setPerson((e as PersonType) ?? "T")}
-            />
-            <Select
-              label="Author"
-              defaultValue="T"
-              value={author}
-              data={[
-                { label: "Together", value: "T" },
-                { label: "Serena", value: "S" },
-                { label: "Yoru", value: "Y" },
-              ]}
-              onChange={(e) => setAuthor((e as PersonType) ?? "T")}
-            />
-            <Button variant="outline" onClick={() => refetch()}>
-              Search
-            </Button>
-            <Divider mt="sm" />
-          </Stack>
           <Tabs defaultValue="panel" value={tab} onTabChange={setTab}>
             <Tabs.List
               bg="white"
-              sx={{ position: "sticky", top: 406, zIndex: 10 }}
+              sx={{ position: "sticky", zIndex: 10, top: 64 }}
             >
               <Tabs.Tab value="panel" icon={<IconAnalyze size="0.8rem" />}>
                 Panel
@@ -110,6 +72,45 @@ export default function Home() {
                 List
               </Tabs.Tab>
             </Tabs.List>
+
+            <Stack bg="white">
+              <Title order={3}>Total Analysis</Title>
+              <MonthPickerInput
+                label="Month"
+                value={date}
+                onChange={(e) => {
+                  const date = new Date(e as Date);
+                  date.setDate(date.getDate() + 1);
+                  setDate(date);
+                }}
+              />
+              <Select
+                label="Using for"
+                defaultValue="T"
+                value={person}
+                data={[
+                  { label: "Together", value: "T" },
+                  { label: "Serena", value: "S" },
+                  { label: "Yoru", value: "Y" },
+                ]}
+                onChange={(e) => setPerson((e as PersonType) ?? "T")}
+              />
+              <Select
+                label="Author"
+                defaultValue="T"
+                value={author}
+                data={[
+                  { label: "Together", value: "T" },
+                  { label: "Serena", value: "S" },
+                  { label: "Yoru", value: "Y" },
+                ]}
+                onChange={(e) => setAuthor((e as PersonType) ?? "T")}
+              />
+              <Button variant="outline" onClick={() => refetch()}>
+                Search
+              </Button>
+              <Divider mt="sm" />
+            </Stack>
 
             <Tabs.Panel value="panel" pt="xs">
               <MainPanel
