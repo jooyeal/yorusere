@@ -6,7 +6,6 @@ import {
 } from "../scheme/expenseScheme";
 import { TRPCError } from "@trpc/server";
 import { env } from "~/env.mjs";
-import { utcToZonedTime } from "date-fns-tz";
 
 export const expenseRouter = createTRPCRouter({
   create: protectedProcedure
@@ -22,7 +21,7 @@ export const expenseRouter = createTRPCRouter({
                 : ctx.session.user.email === env.SERE_EMAIL
                 ? "S"
                 : "Y",
-            dateTime: utcToZonedTime(new Date(input.dateTime), "Asia/Tokyo"),
+            dateTime: new Date(input.dateTime).toISOString(),
           },
         });
       } catch (e) {

@@ -1,6 +1,7 @@
 import { Button, Card, Flex, Grid, Stack } from "@mantine/core";
 import { Expenses } from "@prisma/client";
 import React from "react";
+import { api } from "~/utils/api";
 import { convertExpenseType, convertPersonType } from "~/utils/common";
 
 type Props = {
