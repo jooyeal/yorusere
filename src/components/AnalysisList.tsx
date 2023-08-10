@@ -2,8 +2,6 @@ import { Button, Card, Flex, Grid, Stack } from "@mantine/core";
 import { Expenses } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import React from "react";
-import { env } from "~/env.mjs";
-import { api } from "~/utils/api";
 import { convertExpenseType, convertPersonType } from "~/utils/common";
 
 type Props = {
@@ -28,8 +26,6 @@ const Row = ({
             year: "numeric",
             month: "2-digit",
             day: "2-digit",
-            hour: "2-digit",
-            minute: "2-digit",
           }).format(rowModel.dateTime)}
         </Grid.Col>
         <Grid.Col span={4}>Amount</Grid.Col>
@@ -39,6 +35,8 @@ const Row = ({
             currency: "JPY",
           }).format(rowModel.amount)}
         </Grid.Col>
+        <Grid.Col span={4}>Title</Grid.Col>
+        <Grid.Col span={8}>{rowModel.title}</Grid.Col>
         <Grid.Col span={4}>Type</Grid.Col>
         <Grid.Col span={8}>{convertExpenseType(rowModel.type)}</Grid.Col>
         <Grid.Col span={4}>Using for</Grid.Col>
