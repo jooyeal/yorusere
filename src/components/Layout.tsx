@@ -1,4 +1,11 @@
-import { Box, Center, Container, Text, Title } from "@mantine/core";
+import {
+  Box,
+  Center,
+  Container,
+  LoadingOverlay,
+  Text,
+  Title,
+} from "@mantine/core";
 import { useSession } from "next-auth/react";
 import React, { ReactNode } from "react";
 import Header from "./Header";
@@ -9,7 +16,9 @@ type Props = {
 
 export default function Layout({ children }: Props) {
   const session = useSession();
-  if (!session.data?.user)
+  if (session.status === "loading")
+    return <LoadingOverlay visible={true} overlayBlur={2} />;
+  if (session.status === "unauthenticated")
     return (
       <Box>
         <Header />
