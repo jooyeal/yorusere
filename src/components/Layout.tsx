@@ -1,11 +1,4 @@
-import {
-  Box,
-  Center,
-  Container,
-  LoadingOverlay,
-  Text,
-  Title,
-} from "@mantine/core";
+import { Box, Center, LoadingOverlay, Title } from "@mantine/core";
 import { useSession } from "next-auth/react";
 import React, { ReactNode } from "react";
 import Header from "./Header";

@@ -6,6 +6,7 @@ import {
   Flex,
   Grid,
   Group,
+  LoadingOverlay,
   Stack,
   Text,
   TextInput,
@@ -25,10 +26,16 @@ const Item = ({
   rowModel,
   onClickCheckBox,
   onClickTrash,
+  createLoading,
+  updateLoading,
+  deleteLoading,
 }: {
   rowModel: WishList;
   onClickCheckBox: (id: string, isChecked: boolean) => void;
   onClickTrash: (id: string) => void;
+  createLoading: boolean;
+  updateLoading: boolean;
+  deleteLoading: boolean;
 }) => {
   return (
     <Grid>
@@ -36,6 +43,7 @@ const Item = ({
         <Checkbox
           defaultChecked={rowModel.isChecked}
           onChange={() => onClickCheckBox(rowModel.id, rowModel.isChecked)}
+          disabled={updateLoading || deleteLoading || createLoading}
         />
       </Grid.Col>
       <Grid.Col span={10}>
@@ -49,6 +57,7 @@ const Item = ({
           color="red"
           size="sm"
           onClick={() => onClickTrash(rowModel.id)}
+          disabled={updateLoading || deleteLoading || createLoading}
         >
           <IconTrash />
         </ActionIcon>
@@ -59,10 +68,13 @@ const Item = ({
 
 export default function ShoppingMain() {
   const [opened, { open, close }] = useDisclosure();
-  const { data, refetch } = api.wishlist.getWishList.useQuery();
-  const { mutate: createWishlist } = api.wishlist.create.useMutation();
-  const { mutate: updateWishlist } = api.wishlist.update.useMutation();
-  const { mutate: deleteWishlist } = api.wishlist.delete.useMutation();
+  const { data, refetch, isLoading } = api.wishlist.getWishList.useQuery();
+  const { mutate: createWishlist, isLoading: createLoading } =
+    api.wishlist.create.useMutation();
+  const { mutate: updateWishlist, isLoading: updateLoading } =
+    api.wishlist.update.useMutation();
+  const { mutate: deleteWishlist, isLoading: deleteLoading } =
+    api.wishlist.delete.useMutation();
   const { register, handleSubmit, reset } = useForm<TcreateWishListInput>();
 
   const onClickOk = handleSubmit((data) => {
@@ -146,6 +158,9 @@ export default function ShoppingMain() {
               rowModel={row}
               onClickCheckBox={onClickCheckBox}
               onClickTrash={onClickTrash}
+              createLoading={createLoading}
+              updateLoading={updateLoading}
+              deleteLoading={deleteLoading}
             />
           ))}
         </Stack>
@@ -153,18 +168,29 @@ export default function ShoppingMain() {
       <BaseModal opened={opened} onClose={close}>
         <form onSubmit={onClickOk}>
           <Stack>
-            <TextInput {...register("title")} label="Title" required />
+            <TextInput
+              {...register("title")}
+              label="Title"
+              required
+              disabled={createLoading}
+            />
             <Group position="right">
-              <Button variant="outline" type="submit">
+              <Button variant="outline" type="submit" disabled={createLoading}>
                 OK
               </Button>
-              <Button variant="outline" color="red" onClick={close}>
+              <Button
+                variant="outline"
+                color="red"
+                onClick={close}
+                disabled={createLoading}
+              >
                 CANCEL
               </Button>
             </Group>
           </Stack>
         </form>
       </BaseModal>
+      <LoadingOverlay visible={isLoading} overlayBlur={2} />
     </Container>
   );
 }
