@@ -174,7 +174,7 @@ export default function Voca() {
     );
   };
   return (
-    <Container>
+    <Container p="sm">
       <Stack>
         <Title>Vocabulary</Title>
         <Flex justify="flex-end">
