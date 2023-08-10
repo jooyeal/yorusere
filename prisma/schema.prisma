@@ -80,6 +80,13 @@ model WishList {
     updatedAt DateTime @updatedAt
 }
 
+model Voca {
+    id String @id @default(cuid())
+    voca String @unique
+    mean String
+    isChecked Boolean @default(false)
+}
+
 // Food -> F
 // Liquor -> L
 // Restaurant -> R

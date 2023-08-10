@@ -36,6 +36,12 @@ export default function Header() {
             >
               Wishlist
             </Text>
+            <Text
+              className="font-semibold"
+              onClick={() => onClickLink("/voca")}
+            >
+              Voca
+            </Text>
             <Divider />
             <Text
               className="font-semibold"
