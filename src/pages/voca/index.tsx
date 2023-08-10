@@ -45,6 +45,8 @@ const Item = ({
   deleteLoading: boolean;
 }) => {
   const [opened, { open, close }] = useDisclosure(false);
+  const [deleteOpened, { open: deleteOpen, close: deleteClose }] =
+    useDisclosure();
 
   const onClickSpeaker = (text: string) => {
     const msg = new SpeechSynthesisUtterance();
@@ -84,13 +86,30 @@ const Item = ({
             variant="outline"
             color="red"
             size="sm"
-            onClick={() => onClickTrash(rowModel.id)}
+            onClick={deleteOpen}
             disabled={updateLoading || deleteLoading || createLoading}
           >
             <IconTrash />
           </ActionIcon>
         </Group>
       </Card.Section>
+      <BaseModal opened={deleteOpened} onClose={deleteClose} centered>
+        <Stack>
+          <Text>Do you really want to delete?</Text>
+          <Group position="right">
+            <Button
+              variant="outline"
+              color="red"
+              onClick={() => onClickTrash(rowModel.id)}
+            >
+              OK
+            </Button>
+            <Button variant="outline" onClick={deleteClose}>
+              CANCEL
+            </Button>
+          </Group>
+        </Stack>
+      </BaseModal>
     </Card>
   );
 };

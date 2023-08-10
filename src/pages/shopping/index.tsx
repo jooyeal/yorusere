@@ -37,6 +37,9 @@ const Item = ({
   updateLoading: boolean;
   deleteLoading: boolean;
 }) => {
+  const [deleteOpened, { open: deleteOpen, close: deleteClose }] =
+    useDisclosure();
+
   return (
     <Grid>
       <Grid.Col span={1}>
@@ -56,12 +59,29 @@ const Item = ({
           variant="outline"
           color="red"
           size="sm"
-          onClick={() => onClickTrash(rowModel.id)}
+          onClick={deleteOpen}
           disabled={updateLoading || deleteLoading || createLoading}
         >
           <IconTrash />
         </ActionIcon>
       </Grid.Col>
+      <BaseModal opened={deleteOpened} onClose={deleteClose} centered>
+        <Stack>
+          <Text>Do you really want to delete?</Text>
+          <Group position="right">
+            <Button
+              variant="outline"
+              color="red"
+              onClick={() => onClickTrash(rowModel.id)}
+            >
+              OK
+            </Button>
+            <Button variant="outline" onClick={deleteClose}>
+              CANCEL
+            </Button>
+          </Group>
+        </Stack>
+      </BaseModal>
     </Grid>
   );
 };

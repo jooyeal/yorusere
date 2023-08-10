@@ -1,8 +1,10 @@
-import { Button, Card, Flex, Grid, Stack } from "@mantine/core";
+import { Button, Card, Flex, Grid, Group, Stack, Text } from "@mantine/core";
 import { Expenses } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import React from "react";
 import { convertExpenseType, convertPersonType } from "~/utils/common";
+import BaseModal from "./BaseModal";
+import { useDisclosure } from "@mantine/hooks";
 
 type Props = {
   data: Expenses[] | undefined;
@@ -17,6 +19,9 @@ const Row = ({
   onClickDelete: (id: string) => void;
 }) => {
   const session = useSession();
+  const [deleteOpened, { open: deleteOpen, close: deleteClose }] =
+    useDisclosure();
+
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder>
       <Grid>
@@ -48,7 +53,7 @@ const Row = ({
         <Button
           variant="outline"
           color="red"
-          onClick={() => onClickDelete(rowModel.id)}
+          onClick={deleteOpen}
           disabled={
             rowModel.author === "Y"
               ? "jyol1234@gmail.com" !== session.data?.user.email
@@ -58,6 +63,23 @@ const Row = ({
           Delete
         </Button>
       </Flex>
+      <BaseModal opened={deleteOpened} onClose={deleteClose} centered>
+        <Stack>
+          <Text>Do you really want to delete?</Text>
+          <Group position="right">
+            <Button
+              variant="outline"
+              color="red"
+              onClick={() => onClickDelete(rowModel.id)}
+            >
+              OK
+            </Button>
+            <Button variant="outline" onClick={deleteClose}>
+              CANCEL
+            </Button>
+          </Group>
+        </Stack>
+      </BaseModal>
     </Card>
   );
 };
