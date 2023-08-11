@@ -6,7 +6,6 @@ import {
   Container,
   Flex,
   Group,
-  LoadingOverlay,
   Stack,
   Tabs,
   Text,
@@ -26,6 +25,7 @@ import {
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import BaseModal from "~/components/BaseModal";
+import LoadingScreen from "~/components/LoadingScreen";
 import { TcreateVocaInput } from "~/server/api/scheme/vacaScheme";
 import { api } from "~/utils/api";
 
@@ -203,7 +203,7 @@ export default function Voca() {
         </Flex>
       </Stack>
       <Tabs defaultValue="not" value={tab} onTabChange={setTab}>
-        <Tabs.List bg="white" sx={{ position: "sticky", zIndex: 10, top: 64 }}>
+        <Tabs.List bg="white">
           <Tabs.Tab value="not">Not studied</Tabs.Tab>
           <Tabs.Tab value="all">All</Tabs.Tab>
           <Tabs.Tab value="ok">Studied</Tabs.Tab>
@@ -254,7 +254,7 @@ export default function Voca() {
           </Stack>
         </form>
       </BaseModal>
-      <LoadingOverlay visible={isLoading} overlayBlur={2} />
+      <LoadingScreen visible={isLoading} isBlur />
     </Container>
   );
 }

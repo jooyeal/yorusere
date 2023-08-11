@@ -6,7 +6,6 @@ import {
   Flex,
   Grid,
   Group,
-  LoadingOverlay,
   Stack,
   Text,
   TextInput,
@@ -19,6 +18,7 @@ import { IconPlus, IconTrash } from "@tabler/icons-react";
 import React from "react";
 import { useForm } from "react-hook-form";
 import BaseModal from "~/components/BaseModal";
+import LoadingScreen from "~/components/LoadingScreen";
 import { TcreateWishListInput } from "~/server/api/scheme/wishListScheme";
 import { api } from "~/utils/api";
 
@@ -210,7 +210,7 @@ export default function ShoppingMain() {
           </Stack>
         </form>
       </BaseModal>
-      <LoadingOverlay visible={isLoading} overlayBlur={2} />
+      <LoadingScreen visible={isLoading} isBlur />
     </Container>
   );
 }
