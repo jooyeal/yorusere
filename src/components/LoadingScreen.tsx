@@ -10,7 +10,7 @@ type Props = {
 export default function LoadingScreen({ visible, isBlur }: Props) {
   return visible ? (
     <Lottie
-      className={`fixed top-1 z-50 h-screen bg-white ${
+      className={`fixed top-0 z-50 h-screen w-screen bg-white ${
         isBlur && "bg-opacity-50"
       }`}
       animationData={Cockatoo}
