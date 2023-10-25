@@ -43,12 +43,6 @@ export default function Header() {
               Voca
             </Text>
             <Divider />
-            <Text
-              className="font-semibold"
-              onClick={() => onClickLink("/expense/add")}
-            >
-              Enter new expense
-            </Text>
           </Stack>
           {session.data?.user ? (
             <Text className="font-bold" onClick={async () => await signOut()}>

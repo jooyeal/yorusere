@@ -7,16 +7,109 @@ import {
   Select,
   Divider,
   Button,
+  TextInput,
+  Textarea,
+  ModalProps,
+  ActionIcon,
+  Flex,
 } from "@mantine/core";
-import { MonthPickerInput } from "@mantine/dates";
+import { DatePickerInput, MonthPickerInput } from "@mantine/dates";
+import { useDisclosure } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
 import { PersonType } from "@prisma/client";
-import { IconAnalyze, IconTable } from "@tabler/icons-react";
+import { IconAnalyze, IconPlus, IconTable } from "@tabler/icons-react";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import AnalysisList from "~/components/AnalysisList";
+import BaseModal from "~/components/BaseModal";
 import MainPanel from "~/components/MainPanel";
+import { TcreateExpenseInput } from "~/server/api/scheme/expenseScheme";
 import { api } from "~/utils/api";
+
+function ExpenseAddModal({ opened, onClose }: ModalProps) {
+  const { register, setValue, handleSubmit, reset } =
+    useForm<TcreateExpenseInput>();
+  const { mutate } = api.expense.create.useMutation();
+  const router = useRouter();
+
+  const onSubmit = handleSubmit((data) => {
+    mutate(
+      {
+        ...data,
+        amount: Number(data.amount),
+      },
+      {
+        onSuccess: () => {
+          notifications.show({ message: "New expense is created!" });
+          reset();
+          onClose();
+        },
+        onError: (e) => {
+          notifications.show({
+            message:
+              e.data?.code === "BAD_REQUEST"
+                ? "Please check required fields"
+                : e.message,
+            color: "red",
+          });
+        },
+      }
+    );
+  });
+  return (
+    <BaseModal opened={opened} onClose={onClose}>
+      <form onSubmit={onSubmit}>
+        <Container>
+          <Stack>
+            <Title order={3}>Create new expense</Title>
+            <TextInput {...register("title")} label="Title" required />
+            <TextInput
+              {...register("amount")}
+              type="number"
+              label="Amount"
+              required
+            />
+            <DatePickerInput
+              {...register("dateTime")}
+              label="Pick date and time"
+              onChange={(e) => setValue("dateTime", e as Date)}
+              required
+            />
+            <Select
+              {...register("type")}
+              label="Type"
+              data={[
+                { label: "Food", value: "F" },
+                { label: "Liquor", value: "L" },
+                { label: "Restaurant", value: "R" },
+                { label: "Other", value: "O" },
+              ]}
+              onChange={(e) => setValue("type", e as "F" | "L" | "R" | "O")}
+              required
+            />
+            <Textarea {...register("content")} label="Content" />
+            <Select
+              {...register("person")}
+              label="Using for"
+              data={[
+                { label: "Serena", value: "S" },
+                { label: "Yoru", value: "Y" },
+                { label: "Together", value: "T" },
+              ]}
+              onChange={(e) => setValue("person", e as "S" | "Y" | "T")}
+              required
+            />
+            <Button variant="outline" type="submit">
+              Create
+            </Button>
+          </Stack>
+        </Container>
+      </form>
+    </BaseModal>
+  );
+}
 
 export default function Home() {
   const [date, setDate] = useState<Date>(new Date());
@@ -29,6 +122,7 @@ export default function Home() {
     author,
   });
   const { mutate } = api.expense.delete.useMutation();
+  const [opened, { open, close }] = useDisclosure();
 
   const onClickDelete = (id: string) => {
     mutate(
@@ -74,6 +168,11 @@ export default function Home() {
 
             <Stack bg="white" p="md">
               <Title order={3}>Total Analysis</Title>
+              <Flex justify="flex-end">
+                <ActionIcon variant="outline" onClick={open}>
+                  <IconPlus />
+                </ActionIcon>
+              </Flex>
               <MonthPickerInput
                 label="Month"
                 value={date}
@@ -128,6 +227,13 @@ export default function Home() {
           </Tabs>
         </Container>
       </Box>
+      <ExpenseAddModal
+        opened={opened}
+        onClose={() => {
+          refetch();
+          close();
+        }}
+      />
     </>
   );
 }
