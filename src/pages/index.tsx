@@ -21,7 +21,7 @@ import { api } from "~/utils/api";
 export default function Home() {
   const [date, setDate] = useState<Date>(new Date());
   const [person, setPerson] = useState<PersonType>("T");
-  const [author, setAuthor] = useState<PersonType>("T");
+  const [author, setAuthor] = useState<PersonType>("Y");
   const [tab, setTab] = useState<string | null>("panel");
   const { data, refetch } = api.expense.getByMonth.useQuery({
     date,
@@ -97,14 +97,13 @@ export default function Home() {
               />
               <Select
                 label="Author"
-                defaultValue="T"
+                defaultValue="Y"
                 value={author}
                 data={[
-                  { label: "Together", value: "T" },
-                  { label: "Serena", value: "S" },
                   { label: "Yoru", value: "Y" },
+                  { label: "Serena", value: "S" },
                 ]}
-                onChange={(e) => setAuthor((e as PersonType) ?? "T")}
+                onChange={(e) => setAuthor((e as PersonType) ?? "Y")}
               />
               <Button variant="outline" onClick={() => refetch()}>
                 Search

@@ -1,8 +1,11 @@
 import { Button, Card, Flex, Grid, Group, Stack, Text } from "@mantine/core";
 import { Expenses } from "@prisma/client";
-import { useSession } from "next-auth/react";
 import React from "react";
-import { convertExpenseType, convertPersonType } from "~/utils/common";
+import {
+  convertAuthorType,
+  convertExpenseType,
+  convertPersonType,
+} from "~/utils/common";
 import BaseModal from "./BaseModal";
 import { useDisclosure } from "@mantine/hooks";
 
@@ -18,7 +21,6 @@ const Row = ({
   rowModel: Expenses;
   onClickDelete: (id: string) => void;
 }) => {
-  const session = useSession();
   const [deleteOpened, { open: deleteOpen, close: deleteClose }] =
     useDisclosure();
 
@@ -47,19 +49,10 @@ const Row = ({
         <Grid.Col span={4}>Using for</Grid.Col>
         <Grid.Col span={8}>{convertPersonType(rowModel.person)}</Grid.Col>
         <Grid.Col span={4}>Author</Grid.Col>
-        <Grid.Col span={8}>{convertPersonType(rowModel.author)}</Grid.Col>
+        <Grid.Col span={8}>{convertAuthorType(rowModel.author)}</Grid.Col>
       </Grid>
       <Flex justify="flex-end">
-        <Button
-          variant="outline"
-          color="red"
-          onClick={deleteOpen}
-          disabled={
-            rowModel.author === "Y"
-              ? "jyol1234@gmail.com" !== session.data?.user.email
-              : "seresere707070@gmail.com" !== session.data?.user.email
-          }
-        >
+        <Button variant="outline" color="red" onClick={deleteOpen}>
           Delete
         </Button>
       </Flex>

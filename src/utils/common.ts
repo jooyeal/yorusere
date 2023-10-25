@@ -25,3 +25,12 @@ export const convertPersonType = (type: PersonType) => {
       return "Total";
   }
 };
+
+export const convertAuthorType = (type: PersonType) => {
+  switch (type) {
+    case "S":
+      return "Serena";
+    case "Y":
+      return "Yoru";
+  }
+};
