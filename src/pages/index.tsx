@@ -210,11 +210,18 @@ export default function Home() {
               <Divider mt="sm" />
             </Stack>
 
-            <Tabs.Panel value="panel" pt="xs">
+            <Tabs.Panel value="panel" pt="xs" pb="xs">
               <MainPanel
                 usingFor={person}
                 author={author}
                 totalExpense={data?.totalExpense}
+                yoruTogetherExpense={data?.yoruTogetherExpense}
+                yoruSereExpense={data?.yoruSereExpense}
+                sereTogetherExpense={data?.sereTogetherExpense}
+                sereYoruExpense={data?.sereYoruExpense}
+                yoruTotalExpense={data?.yoruTotalExpense}
+                sereTotalExpense={data?.sereTotalExpense}
+                yoruAmountHaveToPay={data?.yoruAmountHaveToPay}
               />
             </Tabs.Panel>
 

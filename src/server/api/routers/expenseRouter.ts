@@ -2,6 +2,7 @@ import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import {
   createExpenseInput,
   deleteExpenseInput,
+  getAmountHaveToPayInput,
   getByMonthInput,
 } from "../scheme/expenseScheme";
 import { TRPCError } from "@trpc/server";
@@ -72,6 +73,84 @@ export const expenseRouter = createTRPCRouter({
           },
         });
 
+        const yoruExpenses = await ctx.prisma.expenses.findMany({
+          where: {
+            OR: [
+              {
+                dateTime: {
+                  lt: new Date(endDate).toISOString(),
+                  gte: new Date(startDate).toISOString(),
+                },
+                person: "T",
+                author: "Y",
+              },
+              {
+                dateTime: {
+                  lt: new Date(endDate).toISOString(),
+                  gte: new Date(startDate).toISOString(),
+                },
+                person: "S",
+                author: "Y",
+              },
+            ],
+          },
+        });
+
+        const sereExpenses = await ctx.prisma.expenses.findMany({
+          where: {
+            OR: [
+              {
+                dateTime: {
+                  lt: new Date(endDate).toISOString(),
+                  gte: new Date(startDate).toISOString(),
+                },
+                person: "T",
+                author: "S",
+              },
+              {
+                dateTime: {
+                  lt: new Date(endDate).toISOString(),
+                  gte: new Date(startDate).toISOString(),
+                },
+                person: "Y",
+                author: "S",
+              },
+            ],
+          },
+          orderBy: {
+            dateTime: "desc",
+          },
+        });
+
+        const yoruTogetherExpense = yoruExpenses
+          .filter((expense) => expense.person === "T")
+          .reduce((prev, curr) => prev + curr.amount, 0);
+        const yoruSereExpense = yoruExpenses
+          .filter((expense) => expense.person === "S")
+          .reduce((prev, curr) => prev + curr.amount, 0);
+        const sereTogetherExpense = sereExpenses
+          .filter((expense) => expense.person === "T")
+          .reduce((prev, curr) => prev + curr.amount, 0);
+        const sereYoruExpense = sereExpenses
+          .filter((expense) => expense.person === "Y")
+          .reduce((prev, curr) => prev + curr.amount, 0);
+
+        const yoruTotalExpense = yoruExpenses.reduce(
+          (prev, curr) => prev + curr.amount,
+          0
+        );
+
+        const sereTotalExpense = sereExpenses.reduce(
+          (prev, curr) => prev + curr.amount,
+          0
+        );
+
+        const yoruAmountHaveToPay =
+          60000 +
+          Math.ceil(sereTogetherExpense / 2) +
+          sereYoruExpense -
+          (Math.ceil(yoruTogetherExpense / 2) + yoruSereExpense);
+
         const expensesData =
           input.author === "T"
             ? expenses
@@ -84,7 +163,17 @@ export const expenseRouter = createTRPCRouter({
           0
         );
 
-        return { expensesData, totalExpense };
+        return {
+          expensesData,
+          totalExpense,
+          yoruTogetherExpense,
+          yoruSereExpense,
+          sereTogetherExpense,
+          sereYoruExpense,
+          yoruTotalExpense,
+          sereTotalExpense,
+          yoruAmountHaveToPay,
+        };
       } catch (e) {
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",

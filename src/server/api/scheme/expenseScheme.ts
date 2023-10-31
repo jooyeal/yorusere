@@ -19,6 +19,11 @@ export const getByMonthInput = z.object({
   author: z.enum(["S", "Y", "T", "A"]),
 });
 
+export const getAmountHaveToPayInput = z.object({
+  date: z.date(),
+});
+
 export type TcreateExpenseInput = z.infer<typeof createExpenseInput>;
 export type TdeleteExpenseInput = z.infer<typeof deleteExpenseInput>;
-export type TgetByMonth = z.infer<typeof getByMonthInput>;
+export type TgetByMonthInput = z.infer<typeof getByMonthInput>;
+export type TgetAmountHaveToPayInput = z.infer<typeof getAmountHaveToPayInput>;
