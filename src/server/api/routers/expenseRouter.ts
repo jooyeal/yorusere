@@ -67,6 +67,9 @@ export const expenseRouter = createTRPCRouter({
             },
             person: input.person === "A" ? {} : input.person,
           },
+          orderBy: {
+            dateTime: "desc",
+          },
         });
 
         const expensesData =
