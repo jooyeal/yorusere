@@ -58,7 +58,11 @@ export const expenseRouter = createTRPCRouter({
         const targetYear = new Date(targetDate).getFullYear();
         const targetMonth = new Date(targetDate).getMonth() + 1;
         const startDate = new Date(`${targetYear}-${targetMonth}-1`);
-        const endDate = new Date(`${targetYear}-${targetMonth + 1}-1`);
+        const endDate = new Date(
+          `${targetMonth === 12 ? targetYear + 1 : targetYear}-${
+            targetMonth === 12 ? 1 : targetMonth + 1
+          }-1`
+        );
 
         const expenses = await ctx.prisma.expenses.findMany({
           where: {
@@ -175,6 +179,7 @@ export const expenseRouter = createTRPCRouter({
           yoruAmountHaveToPay,
         };
       } catch (e) {
+        console.log(e);
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
           message: "INTERNAL_SERVER_ERROR",
