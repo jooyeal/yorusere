@@ -45,7 +45,6 @@ const Row = ({
         <Grid.Col span={4}>Title</Grid.Col>
         <Grid.Col span={8}>{rowModel.title}</Grid.Col>
         <Grid.Col span={4}>Type</Grid.Col>
-        <Grid.Col span={8}>{convertExpenseType(rowModel.type)}</Grid.Col>
         <Grid.Col span={4}>Using for</Grid.Col>
         <Grid.Col span={8}>{convertPersonType(rowModel.person)}</Grid.Col>
         <Grid.Col span={4}>Author</Grid.Col>
