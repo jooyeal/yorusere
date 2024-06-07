@@ -77,18 +77,6 @@ function ExpenseAddModal({ opened, onClose }: ModalProps) {
               onChange={(e) => setValue("dateTime", e as Date)}
               required
             />
-            <Select
-              {...register("type")}
-              label="Type"
-              data={[
-                { label: "Food", value: "F" },
-                { label: "Liquor", value: "L" },
-                { label: "Restaurant", value: "R" },
-                { label: "Other", value: "O" },
-              ]}
-              onChange={(e) => setValue("type", e as "F" | "L" | "R" | "O")}
-              required
-            />
             <Textarea {...register("content")} label="Content" />
             <Select
               {...register("person")}

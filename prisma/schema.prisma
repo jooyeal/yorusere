@@ -64,7 +64,7 @@ model Expenses {
     title String
     amount Int
     dateTime DateTime
-    type ExpenseType
+    type ExpenseType?
     content String?
     person PersonType
     author PersonType
