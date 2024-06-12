@@ -61,7 +61,7 @@ function ExpenseAddModal({ opened, onClose }: ModalProps) {
   return (
     <BaseModal opened={opened} onClose={onClose}>
       <form onSubmit={onSubmit}>
-        <Container>
+        <Container h={600}>
           <Stack>
             <Title order={3}>Create new expense</Title>
             <TextInput {...register("title")} label="Title" required />
